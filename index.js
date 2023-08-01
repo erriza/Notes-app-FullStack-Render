@@ -1,3 +1,5 @@
+require('dotenv').config()
+const Note = require('./models/note')
 const express = require('express')
 const cors = require('cors')
 const app = express()
@@ -6,26 +8,27 @@ app.use(express.static('build'))
 app.use(cors())
 app.use(express.json())
 
-let notes = [
-  {
-    id: 1,
-    content: "HTML is easy isnt it?",
-    date: "2019-05-30T17:30:31.098Z",
-    important: true
-  },
-  {
-    id: 2,
-    content: "Browser can execute only Javascript",
-    date: "2019-05-30T18:39:34.091Z",
-    important: false
-  },
-  {
-    id: 3,
-    content: "GET and POST are the most important methods of HTTP protocol",
-    date: "2019-05-30T19:20:14.298Z",
-    important: true
-  }
-]
+
+// let notes = [
+//   {
+//     id: 1,
+//     content: "HTML is easy isnt it?",
+//     date: "2019-05-30T17:30:31.098Z",
+//     important: true
+//   },
+//   {
+//     id: 2,
+//     content: "Browser can execute only Javascript",
+//     date: "2019-05-30T18:39:34.091Z",
+//     important: false
+//   },
+//   {
+//     id: 3,
+//     content: "GET and POST are the most important methods of HTTP protocol",
+//     date: "2019-05-30T19:20:14.298Z",
+//     important: true
+//   }
+// ]
 
 app.get('/', (request, response) => {
     response.send('<h1>Hello world</h1>')
@@ -33,7 +36,9 @@ app.get('/', (request, response) => {
 })
 
 app.get('/notes', (request, response) => {
-    response.json(notes)
+    Note.find({}).then(notes => {
+      response.json(notes)
+    })
 })
 
 app.get('/notes/:id', (request, response) => {
@@ -84,7 +89,7 @@ app.post('/notes', (request, response) => {
 })
 
 //running server in port ${PORT}
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running in port: ${PORT}`);
 })
