@@ -18,6 +18,9 @@ const errorHandler = (error, request, response, next) => {
   if(error.message === 'CastError') {
     return response.status(400).send({ error:'malformatted id' })
   }
+  if(error.message === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
 
   next(error)
 }
@@ -95,14 +98,14 @@ app.delete('/notes/:id', (request, response, next) => {
  * PUT method
  */
 app.put('/notes/:id', (request, response, next) => {
-  const body = request.body
+  const {content, important} = request.body
 
   const note = {
     content: body.content,
     important: body.important,
   }
 
-  Note.findOneAndUpdate(request.params.id, note, { new: true })
+  Note.findOneAndUpdate(request.params.id, { content: important }, { new: true, runValidators: true, context: 'query' })
     .then(updateNote => {
       response.json(updateNote)
     })
@@ -112,14 +115,14 @@ app.put('/notes/:id', (request, response, next) => {
 /*
  * POST method
  */
-app.post('/notes', (request, response) => {
+app.post('/notes', (request, response, next) => {
   const body = request.body
 
-  if(!body.content) {
-    return response.status(400).json({
-      error: 'content missing'
-    })
-  }
+  // if(!body.content) {
+  //   return response.status(400).json({
+  //     error: 'content missing'
+  //   })
+  // }
 
   const note = new Note ({
     content: body.content,
@@ -134,6 +137,7 @@ app.post('/notes', (request, response) => {
    note.save().then(savedNote => {
     response.json(savedNote)
   })
+  .catch(error => next(error))
 })
 
 //handler of request with result to errors

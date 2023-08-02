@@ -2,6 +2,6 @@ POST http://localhost:3001/notes
 Content-Type: application/json
 
 {
-    "content": "Ensure everything is workin",
+    "content": "lol",
     "important": false
 }
