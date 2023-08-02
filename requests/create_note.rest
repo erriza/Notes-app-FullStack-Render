@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/persons
+POST http://localhost:3001/notes
 Content-Type: application/json
 
 {
-    "content": "VS code REST clientet is good",
+    "content": "Ensure everything is workin",
     "important": false
 }
