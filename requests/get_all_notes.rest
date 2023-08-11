@@ -1,4 +1,14 @@
-GET http://localhost:3001/api/notes
+GET http://localhost:3001/api/users/
 ###
 
-DELETE http://localhost:3001/api/notes/2 
+DELETE http://localhost:3001/notes/64cbd8c96842cbb3f50fe9fd 
+
+###
+//Auth existin user
+post http://localhost:3001/api/login
+Content-Type: application/json
+
+ {
+    "username": "root",
+    "password": "salainen"
+ }

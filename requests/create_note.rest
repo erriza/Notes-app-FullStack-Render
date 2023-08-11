@@ -2,6 +2,18 @@ POST http://localhost:3001/notes
 Content-Type: application/json
 
 {
-    "content": "lol",
+    
     "important": false
+}
+
+###
+
+POST http://localhost:3001/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY0ZDQ1MzU1N2ZiNGFjZGE3MjJiZjdlMCIsImlhdCI6MTY5MTc5MjkyOX0.hNkvo5HfLfrodvu1wh2ddC2S82Ytmk52Omq9vb19XI0
+
+{
+    "content": "New note without AUth",
+    "important": false,
+    "userId": "64d453557fb4acda722bf7e0"
 }
