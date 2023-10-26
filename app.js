@@ -31,6 +31,12 @@ app.use('/api/users', usersRouter)
 app.use('/notes', notesRouter)
 app.use('/api/login', loginRouter)
 
+if(process.env.NODE_ENV === 'test') {
+    const testingRouter = require('./controllers/testing')
+    console.log('Live from Testing Env', config.MONGO_URI)
+    app.use('/api/testing', testingRouter)
+}
+
 //handler of request with result to errors
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
